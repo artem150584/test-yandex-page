@@ -1,3 +1,4 @@
+@yandex
 Feature: Successful login
 
   Scenario Outline: Succesfull log in
@@ -63,7 +64,6 @@ Feature: Successful login
     And press 'Далее' button
     Then should be shown captcha form
 
-  @test
   Scenario: Forget login and recall
     Given open authorization page
     When click 'Не помню логин' link
