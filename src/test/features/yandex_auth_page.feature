@@ -15,12 +15,12 @@ Feature: Successful login
     Examples:
       | login                | password  |
       | surnameqa            | Surn@meq@ |
-      | surnameqa@yandex.ru  | Surn@meq@ |
-      | surnameqa@yandex.com | Surn@meq@ |
-      | surnameqa@ya.ru      | Surn@meq@ |
-      | surnameqa@yandex.by  | Surn@meq@ |
-      | surnameqa@yandex.ua  | Surn@meq@ |
-      | surnameqa@yandex.kz  | Surn@meq@ |
+#      | surnameqa@yandex.ru  | Surn@meq@ |
+#      | surnameqa@yandex.com | Surn@meq@ |
+#      | surnameqa@ya.ru      | Surn@meq@ |
+#      | surnameqa@yandex.by  | Surn@meq@ |
+#      | surnameqa@yandex.ua  | Surn@meq@ |
+#      | surnameqa@yandex.kz  | Surn@meq@ |
 #      | <mobile phone>       | <password> |
 
   Scenario: Log in with wrong password
@@ -64,6 +64,7 @@ Feature: Successful login
     And press 'Далее' button
     Then should be shown captcha form
 
+  @test
   Scenario: Forget login and recall
     Given open authorization page
     When click 'Не помню логин' link

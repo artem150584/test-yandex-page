@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
-import site.util.SeleniumElement;
+import site.util.SeleniumUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,21 +36,19 @@ public class LogInPage {
 
         driver.get(url);
 
-        WebElement localization = SeleniumElement.byXpath(driver, "//footer/div/div[2]/span[1]/span[1]/span");
+        WebElement localization = SeleniumUtils.byXpath(driver, "//footer/div/div[2]/span[1]/span[1]/span");
         assertNotNull("Localazation not found", localization);
 
         String local = localization.getText();
 
         assertTrue(String.format("unknown local: %s", local), titles.containsKey(local));
         assertEquals(driver.getTitle(), titles.get(local));
-
-        Thread.sleep(2000);
     }
 
     @And("^input (.*): (.*)$")
     public void inputValue(String filed, String password) {
         String xPath = String.format("//*[@id=\"passp-field-%s\"]", filed);
-        WebElement passwordField = SeleniumElement.byXpath(driver, xPath);
+        WebElement passwordField = SeleniumUtils.byXpath(driver, xPath);
         assertNotNull("Login field is not found", passwordField);
 
         passwordField.sendKeys(password);
@@ -59,34 +57,36 @@ public class LogInPage {
     @And("^press '(.*)' button$")
     public void pressButton(String buttonName) throws InterruptedException {
         String xPath = String.format("//span[contains(text(),'%s')]/..", buttonName);
-        WebElement button = SeleniumElement.byXpath(driver, xPath);
+        WebElement button = SeleniumUtils.byXpath(driver, xPath);
         assertNotNull(String.format("'s' button is not found", buttonName), button);
-        button.click();
 
         Thread.sleep(500);
+        button.click();
     }
 
     @When("^click '(.*)' link$")
     public void clickLink(String linkText) throws InterruptedException {
         String xPath = String.format("//a[text()='%s']", linkText);
-        WebElement link = SeleniumElement.byXpath(driver, xPath);
+
+        WebElement link = SeleniumUtils.byXpath(driver, xPath);
         if (link == null) {
             xPath = String.format("//span[text()='%s']", linkText);
-            link = SeleniumElement.byXpath(driver, xPath);
+            link = SeleniumUtils.byXpath(driver, xPath);
         }
         assertNotNull(String.format("'s' link is not found", linkText), link);
-        link.click();
 
         Thread.sleep(500);
+
+        link.click();
     }
 
     @Then("^should be shown any warning message:$")
     public void checkMessage(List<String> expectedMessages) {
         String xPath;
 
-        WebElement element = SeleniumElement.byXpath(driver, "//*[@class=\"passp-form-field__error\"]");
+        WebElement element = SeleniumUtils.byXpath(driver, "//*[@class=\"passp-form-field__error\"]");
         if (element == null) {
-            element = SeleniumElement.byXpath(driver, "//*[@class=\"passp-form-field__label\"]");
+            element = SeleniumUtils.byXpath(driver, "//*[@class=\"passp-form-field__label\"]");
         }
         String actualWarning = element.getText();
 
@@ -103,7 +103,7 @@ public class LogInPage {
 
     @Then("^should be shown login warning message: (.*)$")
     public void checkLoginWarning(String expectedWarning) {
-        WebElement actualWarning = SeleniumElement.byXpath(driver, "//*[@class=\"passp-form-field__error\"]");
+        WebElement actualWarning = SeleniumUtils.byXpath(driver, "//*[@class=\"passp-form-field__error\"]");
         assertNotNull("Warning is not found", actualWarning);
         assertEquals(expectedWarning, actualWarning.getText().replaceAll("&nbsp", " "));
     }
@@ -119,21 +119,21 @@ public class LogInPage {
     @Then("^should be shown message: '(.*)'$")
     public void checkMessage(String expectedMessage) throws InterruptedException {
         Thread.sleep(500);
-        WebElement actualMessage = SeleniumElement.byXpath(driver, "//*[@class=\"passp-title \"]");
+        WebElement actualMessage = SeleniumUtils.byXpath(driver, "//*[@class=\"passp-title \"]");
         assertNotNull("No expected message", actualMessage);
         assertEquals(expectedMessage, actualMessage.getText().replaceAll("&nbsp", " "));
     }
 
     @Then("^should be shown captcha form$")
     public void checkCaptcha() {
-        WebElement captcha = SeleniumElement.byXpath(driver,
+        WebElement captcha = SeleniumUtils.byXpath(driver,
                 "//*[@class=\"passp-form passp-enter-captcha-form\"]");
         assertNotNull("Captcha is not found", captcha);
     }
 
     @And("^click QR button$")
     public void callQrCode() {
-        WebElement qrButton = SeleniumElement.byXpath(driver,
+        WebElement qrButton = SeleniumUtils.byXpath(driver,
                 "//button[@class=\"control button2 button2_view_classic button2_size_l button2_theme_action button2_width_max passp-sign-in-button__magic-link\"]");
         assertNotNull("Captcha is not found", qrButton);
 
@@ -142,7 +142,7 @@ public class LogInPage {
 
     @Then("^extend social network icons$")
     public void checkSocialNetwork() {
-        WebElement extendSocialNetwork = SeleniumElement.byXpath(driver,
+        WebElement extendSocialNetwork = SeleniumUtils.byXpath(driver,
                 "//span[@class=\"passp-social-block__list-item-icon passp-social-block__list-item-icon_more\"]");
         assertNotNull("Captcha is not found", extendSocialNetwork);
 
@@ -154,7 +154,7 @@ public class LogInPage {
         String xPath = String
                 .format("//span[@class=\"passp-social-block__list-item-icon passp-social-block__list-item-icon_%s\"]"
                         , network);
-        WebElement networkLink = SeleniumElement.byXpath(driver, xPath);
+        WebElement networkLink = SeleniumUtils.byXpath(driver, xPath);
         assertNotNull("Network not found", networkLink);
 
         networkLink.click();

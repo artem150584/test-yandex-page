@@ -5,7 +5,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class SeleniumElement {
+public class SeleniumUtils {
     public static WebElement byXpath(WebDriver driver, String xPath) {
         try {
             return driver.findElement(By.xpath(xPath));
