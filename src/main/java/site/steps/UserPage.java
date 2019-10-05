@@ -3,7 +3,7 @@ package site.steps;
 import cucumber.api.java.en.Then;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.springframework.beans.factory.annotation.Autowired;
+import site.ScenarioContext;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,8 +11,11 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 
 public class UserPage {
-    @Autowired
     private WebDriver driver;
+
+    public UserPage(ScenarioContext scenarioContext) {
+        this.driver = scenarioContext.getDriver();
+    }
 
     @Then("^should be shown the following user's data::$")
     public void checkProfilePage(Map<String, String> params) {

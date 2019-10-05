@@ -3,14 +3,18 @@ package site.steps;
 import cucumber.api.java.en.Then;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import site.ScenarioContext;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class SocialNetworkPage {
-    @Autowired
     private WebDriver driver;
+
+    public SocialNetworkPage(ScenarioContext scenarioContextr) {
+        this.driver = scenarioContextr.getDriver();
+    }
 
     @Autowired
     private CommonSteps commonSteps;

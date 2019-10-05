@@ -15,13 +15,13 @@ Feature: Successful login
     Examples:
       | login                | password  |
       | surnameqa            | Surn@meq@ |
-#      | surnameqa@yandex.ru  | Surn@meq@ |
-#      | surnameqa@yandex.com | Surn@meq@ |
-#      | surnameqa@ya.ru      | Surn@meq@ |
-#      | surnameqa@yandex.by  | Surn@meq@ |
-#      | surnameqa@yandex.ua  | Surn@meq@ |
-#      | surnameqa@yandex.kz  | Surn@meq@ |
-#      | <mobile phone>       | <password> |
+      | surnameqa@yandex.ru  | Surn@meq@ |
+      | surnameqa@yandex.com | Surn@meq@ |
+      | surnameqa@ya.ru      | Surn@meq@ |
+      | surnameqa@yandex.by  | Surn@meq@ |
+      | surnameqa@yandex.ua  | Surn@meq@ |
+      | surnameqa@yandex.kz  | Surn@meq@ |
+      | <mobile phone>       | <password> |
 
   Scenario: Log in with wrong password
     Given open authorization page

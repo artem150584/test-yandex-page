@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.beans.factory.annotation.Autowired;
+import site.ScenarioContext;
 import site.util.SeleniumUtils;
 
 import java.util.HashMap;
@@ -19,16 +19,18 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.*;
 
 public class LogInPage {
-    @Autowired
+//    @Autowired
     private WebDriver driver;
+
+    public LogInPage(ScenarioContext scenarioContext) {
+        driver = scenarioContext.getDriver();
+    }
 
     final private String url = "https://passport.yandex.ru/auth?backpath=https%3A%2F%2Fyandex.ru";
 
     @Given("^open authorization page$")
-    public void openAuthPage() throws InterruptedException {
-        driver.manage().deleteAllCookies();
+    public void openAuthPage() {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
 
         Map<String, String> titles = new HashMap<>();
         titles.put("Ru", "Авторизация");
@@ -58,7 +60,7 @@ public class LogInPage {
     public void pressButton(String buttonName) throws InterruptedException {
         String xPath = String.format("//span[contains(text(),'%s')]/..", buttonName);
         WebElement button = SeleniumUtils.byXpath(driver, xPath);
-        assertNotNull(String.format("'s' button is not found", buttonName), button);
+        assertNotNull(String.format("'%s' button is not found", buttonName), button);
 
         Thread.sleep(500);
         button.click();
@@ -73,7 +75,7 @@ public class LogInPage {
             xPath = String.format("//span[text()='%s']", linkText);
             link = SeleniumUtils.byXpath(driver, xPath);
         }
-        assertNotNull(String.format("'s' link is not found", linkText), link);
+        assertNotNull(String.format("'%s' link is not found", linkText), link);
 
         Thread.sleep(500);
 
@@ -82,12 +84,12 @@ public class LogInPage {
 
     @Then("^should be shown any warning message:$")
     public void checkMessage(List<String> expectedMessages) {
-        String xPath;
-
         WebElement element = SeleniumUtils.byXpath(driver, "//*[@class=\"passp-form-field__error\"]");
         if (element == null) {
             element = SeleniumUtils.byXpath(driver, "//*[@class=\"passp-form-field__label\"]");
         }
+        assertNotNull("Warning is not shown", element);
+
         String actualWarning = element.getText();
 
         boolean isWarningPresent = false;
