@@ -12,7 +12,7 @@
         <cucumber.version>1.2.3</cucumber.version>
         <spring.version>4.2.4.RELEASE</spring.version>
         <selenium.version>3.14.0</selenium.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <spring.boot.starter.version>2.1.5.RELEASE</spring.boot.starter.version>
     </properties>
 
